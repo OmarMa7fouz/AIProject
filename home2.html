@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Quiz - Level Up</title>
+
+    <script src="/_sdk/element_sdk.js"></script>
+    <link
+href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&
+family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="home2.css">
+
+    <style>@view-transition { navigation: auto; }</style>
+    <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+</head>
+<body>
+
+    <div class="floating-container">
+        <svg class="floater icon-ghost2" viewBox="0 0 512 512" fill="none"
+xmlns="http://www.w3.org/2000/svg">
+            <path d="M256 64C167.6 64 96 135.6 96 224v176c0 17.7 14.3 32 32 32
+8.8 0 16-3.6 22.6-9.4L208 368l57.4 54.6c6.2 5.8 14.1 9.4 22.6 9.4s16.4-3.6
+22.6-9.4L368 368l57.4 54.6c6.6 5.8 13.8 9.4 22.6 9.4 17.7 0 32-14.3
+32-32V224c0-88.4-71.6-160-160-160z" fill="#FF8E00" stroke="#FF5403"
+stroke-width="32" stroke-linejoin="round"/>
+            <circle cx="192" cy="208" r="24" fill="#262626"/>
+            <circle cx="320" cy="208" r="24" fill="#262626"/>
+        </svg>
+
+        <svg class="floater icon-ghost" viewBox="0 0 512 512" fill="none"
+xmlns="http://www.w3.org/2000/svg">
+            <path d="M256 64C167.6 64 96 135.6 96 224v176c0 17.7 14.3 32 32 32
+8.8 0 16-3.6 22.6-9.4L208 368l57.4 54.6c6.2 5.8 14.1 9.4 22.6 9.4s16.4-3.6
+22.6-9.4L368 368l57.4 54.6c6.6 5.8 13.8 9.4 22.6 9.4 17.7 0 32-14.3
+32-32V224c0-88.4-71.6-160-160-160z" fill="#A855F7" stroke="#6B21A8"
+stroke-width="32" stroke-linejoin="round"/>
+            <circle cx="192" cy="208" r="24" fill="#262626"/>
+            <circle cx="320" cy="208" r="24" fill="#262626"/>
+        </svg>
+
+        <svg class="floater icon-cat" viewBox="0 0 16 14"
+shape-rendering="crispEdges">
+            <path fill="#d8b4fe" d="M2
+1h1v1h1v1h8v-1h1v-1h1v3h-1v1h1v5h-1v1h-1v1h-8v-1h-1v-1h-1v-5h1v-1h-1z"/>
+            <path fill="#f0abfc" d="M3 2h1v2h-1z M12 2h1v2h-1z"/>
+            <path fill="#9333ea" d="M7 3h2v1h-2z M5 5h1v1h-1z M10 5h1v1h-1z M1
+8h2v1h-2z M13 8h2v1h-2z M2 10h1v1h-1z M13 10h1v1h-1z"/>
+            <path fill="#4c1d95" d="M4 7h2v2h-2z M10 7h2v2h-2z M7 10h2v1h-2z"/>
+        </svg>
+
+        <svg class="floater icon-joystick" viewBox="0 0 512 512" fill="none"
+xmlns="http://www.w3.org/2000/svg">
+            <path d="M448 352H64c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64
+64h384c35.3 0 64-28.7 64-64v-32c0-35.3-28.7-64-64-64z" fill="#475569"
+stroke="#1e293b" stroke-width="24" stroke-linejoin="round"/>
+            <path d="M448 320H64c-17.7 0-32 14.3-32
+32h448c0-17.7-14.3-32-32-32z" fill="#64748b" stroke="#1e293b" stroke-width="24"
+stroke-linejoin="round"/>
+            <rect x="232" y="160" width="48" height="180" fill="#94a3b8"
+stroke="#1e293b" stroke-width="24"/>
+            <circle cx="256" cy="128" r="80" fill="#ef4444" stroke="#991b1b"
+stroke-width="24"/>
+            <circle cx="128" cy="368" r="20" fill="#ef4444" stroke="#991b1b"
+stroke-width="12"/>
+        </svg>
+
+        <svg class="floater icon-cat2" viewBox="0 0 16 14"
+shape-rendering="crispEdges">
+            <path fill="#344CB7" d="M2
+1h1v1h1v1h8v-1h1v-1h1v3h-1v1h1v5h-1v1h-1v1h-8v-1h-1v-1h-1v-5h1v-1h-1z"/>
+            <path fill="#000957" d="M3 2h1v2h-1z M12 2h1v2h-1z"/>
+            <path fill="#000957" d="M7 3h2v1h-2z M5 5h1v1h-1z M10 5h1v1h-1z M1
+8h2v1h-2z M13 8h2v1h-2z M2 10h1v1h-1z M13 10h1v1h-1z"/>
+            <path fill="#27005D" d="M4 7h2v2h-2z M10 7h2v2h-2z M7 10h2v1h-2z"/>
+        </svg>
+
+        <svg class="floater icon-alien" viewBox="0 0 12 11"
+shape-rendering="crispEdges">
+            <path fill="#4ade80" d="M4
+0h4v1h2v1h1v1h1v5h-1v1h-1v2h-2v-1h-1v-1h-2v1h-1v1h-2v-2h-1v-1h-1v-5h1v-1h1v-
+1h2z"/>
+            <path fill="#000" d="M2 4h2v3h-2z M8 4h2v3h-2z"/>
+            <path fill="#000" d="M4 8h4v1h-4z"/>
+        </svg>
+    </div>
+
+    <!-- Neon toast notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <div class="main-container" id="mainContainer">
+
+        <nav class="top-nav">
+            <div class="nav-content">
+                <div class="logo-section" id="siteLogo" style="cursor:
+pointer;">
+                    <div class="logo-icon">🕹️</div>
+                    <div class="logo-text" id="logoText">QUIZ MASTER</div>
+                </div>
+
+                <div class="nav-links">
+                    <a href="#" id="navHome">HOME</a>
+                    <a href="#" id="navQuizzes">QUIZZES</a>
+                    <a href="stats.html" id="navStats">STATS</a>
+                    <a href="#" id="navLogin">LOGIN</a>
+                </div>
+            </div>
+        </nav>
+
+        <section class="hero-section">
+            <h1 class="hero-title" id="heroTitle">LEVEL UP<br>YOUR SKILLS</h1>
+            <p class="hero-tagline" id="heroTagline">Where fun meets learning.</p>
+            <p class="hero-description" id="heroDescription">
+                Sign in, pick your quest, and let the games turn study time into play time.
+            </p>
+
+            <div class="action-buttons">
+                <button class="action-btn btn-start" id="startBtn">START
+GAME</button>
+                <button class="action-btn btn-chatbot" id="chatbotBtn">AI
+GUIDE</button>
+                <button class="action-btn btn-learn"
+id="learnBtn">TUTORIAL</button>
+            </div>
+        </section>
+
+        <section class="chatbot-section">
+    <div class="chatbot-container">
+
+        <div class="chatbot-header">
+            <div class="chatbot-icon">👾</div>
+            <div class="chatbot-title">Game Master AI</div>
+        </div>
+
+        <div class="chatbot-messages">
+            <div class="message-bubble" id="chatbotWelcome">Welcome,
+Warrior!</div>
+            <div class="message-bubble" id="chatbotInstruction">
+                Select your target zone to initialize the Mini Quiz protocol.
+            </div>
+
+            <div class="mission-control">
+
+                <div class="custom-select-wrapper">
+                    <input type="hidden" id="questSelector" value="">
+
+                    <div class="custom-select-trigger" id="dropdownTrigger">
+                        <span id="triggerText">🔻 SELECT TARGET ZONE</span>
+                        <div class="arrow">▼</div>
+                    </div>
+
+                    <div class="custom-options">
+                        <div class="custom-option" data-value="web">
+                            💻 Web Development (INT341)
+                        </div>
+                        <div class="custom-option" data-value="para">
+                            💡​ Parallel Processing (CSW325)
+                        </div>
+                        <div class="custom-option" data-value="ai">
+                            🤖​ Artificial Intelligence (CSW351)
+                        </div>
+                    </div>
+                </div>
+
+                <button class="launch-btn" id="launchBtn">GO!! 🚀</button>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+        <section class="subjects-section">
+            <h2 class="section-title"><span>SELECT ZONE</span></h2>
+            <div class="subjects-grid">
+                <div class="card-glass">
+                    <div class="subject-icon">💡</div>
+                    <div class="subject-name">Parallel Processing</div>
+                    <div class="subject-code">CSW325</div>
+                </div>
+                <div class="card-glass">
+                    <div class="subject-icon">💻</div>
+                    <div class="subject-name">Web Development</div>
+                    <div class="subject-code">INT341</div>
+                </div>
+                <div class="card-glass">
+                    <div class="subject-icon">🤖</div>
+                    <div class="subject-name">Artificial Intelligence</div>
+                    <div class="subject-code">CSW351</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="difficulty-section">
+            <h2 class="section-title"><span>DIFFICULTY</span></h2>
+            <div class="difficulty-grid">
+                <div class="card-glass" style="border-bottom: 3px solid
+#00ff00;">
+                    <div class="subject-icon">🙂</div>
+                    <div class="subject-name">NOOB</div>
+                    <p style="color:#aaa;">For Beginners</p>
+                </div>
+                <div class="card-glass" style="border-bottom: 3px solid
+#ffff00;">
+                    <div class="subject-icon">😐</div>
+                    <div class="subject-name">PRO</div>
+                    <p style="color:#aaa;">Standard Mode</p>
+                </div>
+                <div class="card-glass" style="border-bottom: 3px solid
+#ff0000;">
+                    <div class="subject-icon">😈</div>
+                    <div class="subject-name">HACKER</div>
+                    <p style="color:#aaa;">Hardcore Mode</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="user-section">
+            <h2 class="section-title"><span>YOUR STATS</span></h2>
+            <div class="user-card" id="userCard">
+                Login to track your matches and see your achievements.
+            </div>
+        </section>
+
+        <div id="authPopup" class="popup-overlay">
+            <div class="auth-container">
+                <div class="close-btn" onclick="closeAuthPopup()">✖</div>
+                <div class="auth-card">
+                    <h2 class="auth-title">ACCESS TERMINAL</h2>
+
+                    <div class="auth-tabs">
+                        <div class="auth-tab active"
+onclick="switchTab('login')">LOGIN</div>
+                        <div class="auth-tab"
+onclick="switchTab('register')">REGISTER</div>
+                    </div>
+
+                    <form id="loginForm" class="auth-form active">
+                        <div class="input-group">
+                            <input type="text" class="glass-input" id="loginUsername" name="loginUsername"
+                            placeholder="Username / ID" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" class="glass-input" id="loginPassword" name="loginPassword"
+                            placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="submit-btn">ENTER SYSTEM
+➜</button>
+                        <div class="form-footer">
+                            <a href="#">Forgot Password?</a>
+                        </div>
+                    </form>
+
+                    <form id="registerForm" class="auth-form">
+                        <div class="input-group">
+                            <input type="text" class="glass-input" id="registerUsername" name="registerUsername"
+                            placeholder="Choose Username" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" class="glass-input" id="registerEmail" name="registerEmail"
+                            placeholder="Student Email" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" class="glass-input" id="registerPassword" name="registerPassword"
+                            placeholder="Create Password" required>
+                        </div>
+                        <button type="submit" class="submit-btn">JOIN SERVER
+➜</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="home2.js"></script>
+</body>
+</html>

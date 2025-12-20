@@ -1,0 +1,633 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+  font-family: "Press Start 2P", cursive, monospace;
+  background-image: url("bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.game-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background animations */
+.background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("bg.png"); /* replace with your image path */
+  background-size: cover; /* cover entire div */
+  background-position: center; /* center the image */
+  background-repeat: no-repeat; /* prevent tiling */
+  z-index: 1;
+}
+
+.road {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background-color: #0b192c; /* Dark Blue Road Base */
+  border-top: 4px solid #2c3e50;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.road-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  transform: translateY(-50%);
+
+  /* ADD THESE 3 PROPERTIES BELOW TO MAKE LINES VISIBLE & MOVING */
+  background-image: linear-gradient(
+    90deg,
+    #6faec9 0%,
+    #6faec9 50%,
+    transparent 50%,
+    transparent 100%
+  );
+  background-size: 300px 100%;
+  animation: moveRoad 2s linear infinite;
+}
+
+/* ENSURE THIS KEYFRAME EXISTS RIGHT AFTER */
+@keyframes moveRoad {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -300px 0;
+  }
+}
+@keyframes moveFog {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Character */
+.character {
+  position: absolute;
+  bottom: 62px;
+  left: 10%;
+  width: 95px;
+  height: 125px;
+  z-index: 5;
+}
+
+.frame {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+.frame1 {
+  display: block;
+}
+
+/* Move forward to point B */
+.character.move-forward {
+  transition: transform 0.6s linear;
+  transform: translateX(80px);
+}
+
+/* Move back to point A */
+.character.move-back {
+  transition: transform 0.6s linear;
+  transform: translateX(0);
+}
+
+.character.colliding {
+  animation: collision 1.5s ease;
+}
+
+.character.colliding .character-body {
+  filter: hue-rotate(270deg) brightness(1.2);
+}
+
+@keyframes collision {
+  0% {
+    filter: brightness(1);
+  }
+  25% {
+    filter: hue-rotate(90deg) brightness(1.5);
+  }
+  50% {
+    filter: hue-rotate(90deg) brightness(1.5);
+  }
+  75% {
+    filter: hue-rotate(90deg) brightness(1.5);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+@keyframes run {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* --- 1. Shared Container Styles --- */
+.obstacle {
+  position: absolute;
+  /* Adjust these dimensions to match the actual size of your cat image */
+  width: 200px;
+  height: 200px;
+  z-index: 5;
+  pointer-events: none; /* Ensures clicks pass through if they overlap buttons
+*/
+}
+
+/* --- 2. Image Styling (The Frames) --- */
+/* This ensures the cat images fit perfectly inside the .obstacle box */
+.obstacle img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Keeps the cat's aspect ratio correct */
+  display: none; /* JS handles showing/hiding */
+}
+
+/* --- 3. Obstacle A (TOP LANE) --- */
+#obstacleA {
+  /* Change 'top' to move the Top Cat up or down */
+  top: 620px;
+}
+
+/* --- 4. Obstacle B (BOTTOM LANE) --- */
+#obstacleB {
+  /* Change 'top' to move the Bottom Cat up or down */
+  top: 750px;
+}
+
+/* --- 5. Animation --- */
+@keyframes obstacleMove {
+  0% {
+    right: -200px; /* Start off-screen right */
+  }
+  100% {
+    right: 120%; /* Move all the way to the left */
+  }
+}
+
+/* Score Board */
+.score-board {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 15px 20px;
+  border-radius: 10px;
+  border: 3px solid #ffd700;
+}
+
+.score-item {
+  color: white;
+  font-size: 12px;
+  margin: 5px 0;
+  text-shadow: 2px 2px 0 #000;
+}
+
+/* Quiz Panel */
+.quiz-panel {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  width: 90%;
+  max-width: 600px;
+}
+
+.question-box {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 25px;
+  border-radius: 15px;
+  border: 5px solid #333;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.question-box h2 {
+  color: #333;
+  margin-bottom: 25px;
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.option-button {
+  padding: 20px;
+  font-size: 12px;
+  background: #4caf50;
+  color: white;
+  border: 4px solid #2e7d32;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Press Start 2P", cursive, monospace;
+  line-height: 1.5;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.option-button:hover:not(.disabled) {
+  background: #66bb6a;
+  transform: scale(1.05);
+}
+
+.option-button:active:not(.disabled) {
+  transform: scale(0.95);
+}
+
+.option-button.correct {
+  background: #4caf50;
+  border-color: #1b5e20;
+  animation: correctPulse 0.5s ease;
+}
+
+.option-button.incorrect {
+  background: #f44336;
+  border-color: #b71c1c;
+  animation: incorrectShake 0.5s ease;
+}
+
+.option-button.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+@keyframes correctPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes incorrectShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  75% {
+    transform: translateX(10px);
+  }
+}
+
+/* Results Screen */
+.results-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 30;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.results-box {
+  background: white;
+  padding: 50px;
+  border-radius: 20px;
+  border: 6px solid #333;
+  text-align: center;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+  animation: resultsFadeIn 0.5s ease;
+}
+
+@keyframes resultsFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.results-box h1 {
+  font-size: 1.5em;
+  margin-top: 20px;
+  width: 400px;
+  margin: 20px auto 0;
+  color: white;
+  text-align: center;
+  font-family: "Press Start 2P", monospace;
+  -webkit-font-smoothing: none; /* keeps the pixel look */
+  -webkit-text-stroke: 1px black; /* thick black outline */
+  text-rendering: geometricPrecision;
+  letter-spacing: 2px;
+}
+
+.score-display {
+  margin: 30px 0;
+}
+
+.final-score {
+  font-size: 72px;
+  color: #ffd700;
+  text-shadow: 4px 4px 0 #ff4444;
+  margin-bottom: 10px;
+}
+
+.score-label {
+  font-size: 16px;
+  color: #666;
+}
+
+.performance-message {
+  font-size: 14px;
+  color: #4caf50;
+  margin: 30px 0;
+  line-height: 1.6;
+}
+
+.restart-button {
+  padding: 20px 40px;
+  font-size: 14px;
+  background: #ff4444;
+  color: white;
+  border: 4px solid #cc0000;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: "Press Start 2P", cursive, monospace;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+.restart-button:hover {
+  background: #ff6666;
+  transform: scale(1.05);
+}
+
+.restart-button:active {
+  transform: scale(0.95);
+}
+
+/* Results actions (Play Again + Back to Home) */
+.results-actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.results-actions .restart-button {
+  margin-top: 0; /* align vertically with home-button inside the row */
+}
+
+.home-button {
+  padding: 20px 40px; /* match .restart-button */
+  font-size: 14px; /* match .restart-button */
+  background: #00f2ff;
+  color: #0b1120;
+  border: 4px solid #0ea5e9;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: "Press Start 2P", cursive, monospace;
+  transition: all 0.25s ease;
+  text-transform: uppercase;
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.7);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.home-button:hover {
+  background: #22d3ee;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 0 26px rgba(56, 189, 248, 0.9);
+}
+
+.home-button:active {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+}
+
+/*////////////////////////////////////////////////////////////////////*/
+
+/* Rules Screen - Applied from first code */
+.rules-screen {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("sbg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 10px;
+  z-index: 40;
+}
+
+.rules-screen.active {
+  display: flex;
+}
+
+.rules-screen h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  font-family: "Press Start 2P", monospace;
+  -webkit-font-smoothing: none;
+  -webkit-text-stroke: 3px #ff5656;
+  color: black;
+  text-rendering: geometricPrecision;
+  letter-spacing: 2px;
+}
+
+.rules-screen p {
+  margin: 17px auto;
+  font-family: "Press Start 2P", monospace;
+  font-size: 21px;
+  -webkit-font-smoothing: none;
+  -webkit-text-stroke: 1.2px #ff5656;
+  text-rendering: geometricPrecision;
+  letter-spacing: 2px;
+  line-height: 24px;
+  padding: 20px;
+  max-width: 58%;
+}
+
+.next-button {
+  padding: 10px 20px;
+  font-size: 1.2em;
+  background-color: #ff5656;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+  display: block;
+  margin: 20px auto 0;
+}
+
+.next-button:hover {
+  background-color: #c5172e;
+}
+
+/* Ready Screen - Applied from first code */
+.ready-screen {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("sbg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 10px;
+  z-index: 40;
+}
+
+.ready-screen.active {
+  display: flex;
+}
+
+.ready-screen h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  font-family: "Press Start 2P", monospace;
+  -webkit-font-smoothing: none;
+  -webkit-text-stroke: 3px #ff5656;
+  color: black;
+  text-rendering: geometricPrecision;
+  letter-spacing: 2px;
+}
+
+.yes-button {
+  padding: 10px 20px;
+  font-size: 1.2em;
+  background-color: #ff5656;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+  display: block;
+  margin: 20px auto 0;
+}
+
+.yes-button:hover {
+  background-color: #c5172e;
+}
+
+/* Countdown Screen - Applied from first code */
+.countdown-screen {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("sbg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 10px;
+  z-index: 40;
+}
+
+.countdown-screen.active {
+  display: flex;
+}
+
+#countdown-number {
+  font-size: 5em;
+  color: #ff5656;
+  -webkit-text-stroke: 2px #8ce4ff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .question-box h2 {
+    font-size: 12px;
+  }
+
+  .option-button {
+    font-size: 10px;
+    padding: 15px;
+    min-height: 70px;
+  }
+
+  .score-item {
+    font-size: 10px;
+  }
+
+  .results-box {
+    padding: 30px;
+  }
+
+  .results-box h1 {
+    font-size: 20px;
+  }
+
+  .final-score {
+    font-size: 48px;
+  }
+
+  .performance-message {
+    font-size: 11px;
+  }
+
+  .restart-button {
+    font-size: 11px;
+    padding: 15px 30px;
+  }
+}

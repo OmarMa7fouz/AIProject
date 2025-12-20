@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Master - Player Stats</title>
+
+    <!--<script src="/_sdk/element_sdk.js"></script>-->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="stats.css">
+    <style>@view-transition { navigation: auto; }</style>
+</head>
+<body>
+    <!-- Floating background icons (same vibe as home2) -->
+    <div class="floating-container">
+        <svg class="floater icon-ghost2" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M256 64C167.6 64 96 135.6 96 224v176c0 17.7 14.3 32 32 32 8.8 0 16-3.6 22.6-9.4L208 368l57.4 54.6c6.2 5.8 14.1 9.4 22.6 9.4s16.4-3.6 22.6-9.4L368 368l57.4 54.6c6.6 5.8 13.8 9.4 22.6 9.4 17.7 0 32-14.3 32-32V224c0-88.4-71.6-160-160-160z" fill="#FF8E00" stroke="#FF5403" stroke-width="32" stroke-linejoin="round"/>
+            <circle cx="192" cy="208" r="24" fill="#262626"/>
+            <circle cx="320" cy="208" r="24" fill="#262626"/>
+        </svg>
+
+        <svg class="floater icon-ghost" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M256 64C167.6 64 96 135.6 96 224v176c0 17.7 14.3 32 32 32 8.8 0 16-3.6 22.6-9.4L208 368l57.4 54.6c6.2 5.8 14.1 9.4 22.6 9.4s16.4-3.6 22.6-9.4L368 368l57.4 54.6c6.6 5.8 13.8 9.4 22.6 9.4 17.7 0 32-14.3 32-32V224c0-88.4-71.6-160-160-160z" fill="#A855F7" stroke="#6B21A8" stroke-width="32" stroke-linejoin="round"/>
+            <circle cx="192" cy="208" r="24" fill="#262626"/>
+            <circle cx="320" cy="208" r="24" fill="#262626"/>
+        </svg>
+    </div>
+
+    <div class="main-container">
+        <nav class="top-nav">
+            <div class="nav-content">
+                <div class="logo-section">
+                    <div class="logo-icon">🕹️</div>
+                    <div class="logo-text">QUIZ MASTER</div>
+                </div>
+                <div class="nav-links">
+                    <a href="home2.html">HOME</a>
+                    <a href="stats.html" class="active-link">STATS</a>
+                </div>
+            </div>
+        </nav>
+
+        <section class="hero-section">
+            <h1 class="hero-title">PLAYER STATS</h1>
+            <p class="hero-tagline">Track your runs. Chase the high score.</p>
+            <p class="hero-description">
+                View your recent matches, best runs, and compare yourself with other players using this neon game dashboard.
+            </p>
+        </section>
+
+        <section class="stats-grid-section">
+            <div class="stats-card" id="playerSummary">
+                Loading your stats...
+            </div>
+
+            <div class="stats-card" id="leaderboardCard">
+                <h2 class="card-title">Top Players</h2>
+                <div class="table-wrapper">
+                    <table class="stats-table" id="leaderboardTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Player</th>
+                                <th>Total Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="stats.js"></script>
+</body>
+</html>

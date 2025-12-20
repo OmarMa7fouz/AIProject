@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Witch Quiz Game</title>
+    <link
+href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+rel="stylesheet">
+
+    <link rel="stylesheet" href="mag.css">
+</head>
+<body>
+
+    <!-- ===========================
+         Background
+    ============================ -->
+    <div id="background">
+    </div>
+
+    <!-- ===========================
+     Rules Screen
+=========================== -->
+<div id="rules-screen">
+    <img id="rules-bg" src="cbg.png" alt="Cauldron Background">
+    <div id="rules-text-container">
+        <p class="rule-text">• You will be asked a series of questions.</p>
+        <p class="rule-text">• Select the correct answer before time runs
+out.</p>
+        <p class="rule-text">• Each correct answer gives you points.</p>
+    </div>
+    <button id="start-game-btn">Let's Play!</button>
+</div>
+
+
+    <!-- ===========================
+         Score Board
+    ============================ -->
+    <div class="score-board">
+        <div class="score-item">
+            Total Score: <span id="total-score">0</span>
+        </div>
+        <div class="score-item">
+            Current Level: <span id="current-level-display">Easy</span>
+        </div>
+    </div>
+
+    <!-- ===========================
+         Books Container (7 Images)
+    ============================ -->
+    <div id="books">
+        <img class="b1" src="book1.png" alt="Book 1">
+        <img class="b2" src="book2.png" alt="Book 2">
+        <img class="b3" src="book3.png" alt="Book 3">
+        <img class="b4" src="book4.png" alt="Book 4">
+        <img class="b5" src="book5.png" alt="Book 5">
+        <img class="b6" src="book6.png" alt="Book 6">
+        <img class="b7" src="book42.png" alt="Book 7">
+    </div>
+
+
+    <!-- ===========================
+         Cauldron (2 Frames)
+    ============================ -->
+    <div id="cauldron">
+        <img src="cauldron1.png" alt="Cauldron Frame 1">
+        <img src="cauldron2.png" alt="Cauldron Frame 2">
+    </div>
+
+     <!-- ===========================
+         Cauldronr(1 image)
+    ============================ -->
+    <div id="cauldronr">
+        <img src="cauldronr.png" alt="Cauldron Frame 1">
+    </div>
+
+     <!-- ===========================
+         Cauldron (1 image)
+    ============================ -->
+    <div id="cauldronf">
+        <img src="cauldronf.png" alt="Cauldron Frame 1">
+    </div>
+
+    <!-- ===========================
+         Witch (3 Frames)
+    ============================ -->
+    <div id="witch">
+        <img src="witch1.png" alt="Witch Frame 1">
+        <img src="witch2.png" alt="Witch Frame 2">
+    </div>
+
+    <!-- ===========================
+         Question Container
+         Image + Text Overlay
+    ============================ -->
+    <div id="question-container">
+        <img src="qbg.png" alt="Question Background">
+        <p id="question-text">Question will appear here</p>
+    </div>
+
+ <!-- ===========================
+     Choices Container
+     (Transparent Square with 4 Images + Text)
+=============================== -->
+
+<div id="choices">
+    <!-- Choice 1 -->
+    <div class="choice-box Choice1">
+        <img src="choice1.png" alt="Choice 1">
+        <p class="choice-text">Option A</p>
+    </div>
+
+    <!-- Choice 2 -->
+    <div class="choice-box Choice2">
+        <img src="choice2.png" alt="Choice 2">
+        <p class="choice-text">Option B</p>
+    </div>
+
+    <!-- Choice 3 -->
+    <div class="choice-box Choice3">
+        <img src="choice3.png" alt="Choice 3">
+        <p class="choice-text">Option C</p>
+    </div>
+
+    <!-- Choice 4 -->
+    <div class="choice-box Choice4">
+        <img src="choice4.png" alt="Choice 4">
+        <p class="choice-text">Option D</p>
+    </div>
+</div>
+
+    <!-- ===========================
+         Frog (2 Frames)
+    ============================ -->
+    <div id="frog">
+        <img src="frog1.png" alt="Frog Frame 1">
+        <img src="frog2.png" alt="Frog Frame 2">
+    </div>
+
+    <!-- ===========================
+         Cloud (1 image)
+    ============================ -->
+    <div id="cloud">
+        <img src="cloud.png" alt="Cloud Frame 1">
+    </div>
+
+    <!-- ===========================
+         Rich (2 Frames)
+    ============================ -->
+    <div id="rich">
+        <img src="rich1.png" alt="Rich Frame 1">
+        <img src="rich2.png" alt="Rich Frame 2">
+    </div>
+
+    <!-- ===========================
+         Money (1 Frame)
+    ============================ -->
+    <div id="money">
+        <img src="money.png" alt="Money Image">
+    </div>
+
+
+
+    <!-- ===========================
+         Custom Popup Modal
+    ============================ -->
+    <div id="magic-popup" class="magic-popup" style="display: none;">
+        <div class="magic-popup-content">
+            <div class="magic-popup-header">✨ Magic Message ✨</div>
+            <div class="magic-popup-message" id="magic-popup-message"></div>
+            <button class="magic-popup-button" id="magic-popup-ok">Continue</button>
+        </div>
+    </div>
+
+    <script src="mag.js"></script>
+</body>
+</html>

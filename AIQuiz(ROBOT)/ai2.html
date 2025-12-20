@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Runner Game</title>
+    <link
+    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+    rel="stylesheet">
+    <link rel="stylesheet" href="ai2.css">
+</head>
+<body>
+    <div id="rules-screen" class="rules-screen">
+        <h1>Game Rules</h1>
+        <p>1.Answer quiz questions quickly to skip cars!</p>
+        <p>2.answer correct you pass safely.Wrong answers cause a
+           collision.</p>
+        <p>3.You have 3 seconds per question!</p>
+        <button class="next-button" id="next-button">Next</button>
+    </div>
+
+    <div id="ready-screen" class="ready-screen" style="display: none;">
+        <h1>Are You Ready?</h1>
+        <button class="yes-button" id="yes-button">Yes</button>
+    </div>
+
+    <div id="countdown-screen" class="countdown-screen" style="display: none;">
+        <div id="countdown-number">3</div>
+    </div>
+
+    <div id="game-container" class="game-container" style="display: none;">
+        <div class="background">
+            <div class="ground"></div>
+            <div class="ground-tiles"></div>
+            <div class="road">
+                <div class="road-line">
+            </div>
+        </div>
+
+        <div id="character" class="character">
+            <div id="character" class="character">
+                <img src="run1.png" class="frame frame1">
+                <img src="run2.png" class="frame frame2">
+                <img src="run3.png" class="frame frame3">
+            </div>
+        </div>
+
+         <!-- Obstacle for position A -->
+        <div id="obstacleA" class="obstacle" style="display: none;">
+            <div class="obstacle-block"></div>
+        </div>
+
+        <!-- Obstacle for position B -->
+        <div id="obstacleB" class="obstacle" style="display: none;">
+            <div class="obstacle-block"></div>
+        </div>
+
+        <div class="score-board">
+            <div class="score-item">Question: <span
+                id="current-question">1</span>/<span
+                id="total-questions">5</span></div>
+            <div class="score-item">Score: <span id="score">0</span></div>
+        </div>
+
+        <div id="quiz-panel" class="quiz-panel" style="display: none;">
+            <div class="question-box">
+                <h2 id="question-text"></h2>
+                <div id="options-grid" class="options-grid"></div>
+            </div>
+        </div>
+
+        <div id="results-screen" class="results-screen" style="display: none;">
+            <div class="results-box">
+                <h1>Game Over!</h1>
+                <div class="score-display">
+                    <div class="final-score" id="final-score">0</div>
+                    <div class="score-label">out of <span
+                    id="total-questions-result">5</span></div>
+                </div>
+                <div class="performance-message" id="performance-message"></div>
+                <div class="results-actions">
+                    <button class="restart-button" id="restart-button">Play Again</button>
+                    <a href="../home2.html" class="home-button" id="home-button">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="ai2.js"></script>
+</body>
+</html>
