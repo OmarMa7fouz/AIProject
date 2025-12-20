@@ -1,66 +1,189 @@
 # Quiz Master — Local Quiz Games (Frontend Prototype)
 
-Brief: a client-only quiz platform that turns course content into three interactive mini-games (Magic Library, Cat & Rat, AI Robot). Users register locally, play timed quizzes grouped by level, earn points/XP, and view a leaderboard — all persisted in browser `localStorage`.
 
-Quick start
+Abstract
 
-- Open the project folder `FINAL PROJECT` in your file explorer.
-- Option A (recommended for local testing): serve files with a simple static server and open the app in a browser:
+This project presents a client-side adaptive quiz system that evaluates users through multiple difficulty levels and ranks them using a Greedy Algorithm. The system dynamically controls exam progression based on user performance and applies a greedy heuristic to compute final rankings. The entire application is implemented using frontend technologies without any backend or database dependency.
 
-```powershell
-cd "c:\Users\USER\Downloads\Projects\AI\FINALPROJECT\FINALPROJECT\FINAL PROJECT"
-python -m http.server 8000
-# then open http://localhost:8000/home2.html in your browser
-```
+Project Description
 
-- Option B (quick): double-click `home2.html` to open it in your browser (some audio or CORS features may be limited when using `file://`).
+The AI Quiz System is a browser-based application designed to simulate adaptive assessment systems. Users are evaluated through a structured set of exams organized by difficulty levels. Each decision in the exam flow is made locally based on the user’s current performance.
 
-What to try
+The project focuses on algorithmic logic, decision-making strategies, and heuristic-based ranking rather than server-side processing.
 
-- Register a user: open `home2.html` → `LOGIN` → `REGISTER`. The user is stored in `localStorage` under key `quizUsers` and `currentUser`.
-- Play: select a subject (dropdown) and `GO!!` to launch a game. Each game follows: rules → countdown → per-question timed loop → results.
-- Verify persistence: after finishing a run the game appends a `match` object to the user and updates `xp`, `level`, and `wtotalPoints` as applicable.
-- Stats and leaderboard: open `stats.html` to view the player summary and the aggregated leaderboard.
-- Admin shortcut: press Ctrl+Shift+U on `home2.html` to download `users.json` (exports the `quizUsers` data).
+System Architecture
 
-Testing & debugging notes
+- Frontend-only application
+- No backend server
+- No database
+- Persistent data stored using Browser Local Storage
+- JSON files used for question banks and configuration
 
-- Inspect `localStorage` (DevTools → Application → Local Storage) to view `quizUsers` and `currentUser` objects. Useful fields: `matches`, `xp`, `level`, `wtotalPoints`.
-- If a game appears to hang: open DevTools Console to view logs — modules log flow and verification (e.g., `mag.js` verifies saved `wtotalPoints`).
-- Common quick fixes: ensure the selected course folder path is correct in `home2.js` (`launchBtn` sets the target page paths). If frames/images/audio don’t appear, confirm assets exist in each game folder.
+Exam Structure
 
-Project layout (relevant files)
+Each subject contains three difficulty levels:
 
-- `home2.html`, `home2.css`, `home2.js` — app shell, auth, launcher, UI helpers (toasts, dropdown).
-- `stats.html`, `stats.css`, `stats.js` — player summary and leaderboard aggregation logic.
-- `Quiz(Magic Library)/mag.js` — Magic Library game, score saving logic and defensive localStorage verification.
-- `Quiz(Cat&Rat)/cat-rat.js` — Parallel Processing quiz with animated obstacle frames.
-- `AIQuiz(ROBOT)/ai2.js` — AI quiz runner; shares the same game pattern.
+- Easy
+- Medium
+- Hard
 
-Key engineering notes
+Each difficulty level contains three exams:
 
-- Persistence: browser `localStorage` used as the single source of truth for users; no backend. This enables an offline demo but is not secure for production.
-- Reuse: all games implement a consistent lifecycle (rules → countdown → timed Q/A → results) and reuse a small level/progression state machine (`currentLevel`, `currentGroup`, `groupValues`).
-- Aggregation: `stats.js` normalizes different game metrics (e.g., `wtotalPoints` and `xp`) to present a combined leaderboard.
+- Easy level: e1, e2, e3
+- Medium level: m1, m2, m3
+- Hard level: h1, h2, h3
 
-Recommended short-term improvements (prioritized)
+Each exam has a predefined weight:
 
-1. Backend user service + secure auth (High effort): Move user accounts and matches to a server API; store hashed passwords (bcrypt/argon2). Adds persistence across devices and secures data.
-2. Sync & conflict handling (Medium): Add sync strategy for offline play (local queue, server reconciliation) to keep local matches and server records consistent.
-3. API contract + validation (Low): Define simple REST endpoints for users, matches, and leaderboard; validate payloads server-side to avoid client-driven corruption.
-4. Tests & CI (Low–Medium): Unit tests for persistence helpers and game progression logic; add a simple CI pipeline to run lint/tests.
-5. Analytics & telemetry (Low): Emit minimal events (game started, level completed, score) to monitor engagement during early user testing.
-6. Small UX fixes (Low): Add server-side error handling, improve accessibility (ARIA labels), and make audio optional.
+- First exam in level: 3 points
+- Second exam in level: 2 points
+- Third exam in level: 1 point
 
-If you want, I can:
+Exam Flow Logic
 
-- scaffold a tiny Node/Express backend (endpoints for auth, save match, leaderboard) and wire `home2.js` to it; or
-- implement a local dev helper to export/import `quizUsers` JSON with merge semantics.
+- The user selects a subject.
+- The user completes an initial assessment.
+- Based on the score, the system assigns the user to a difficulty level.
+- Exams within a level are taken sequentially.
 
-Files created/updated
+If the user passes an exam:
 
-- Created: `FINAL PROJECT/README.md`
+- The score of that exam is added.
+- The user advances to the next difficulty level.
 
----
+If the user fails an exam:
 
-Generated on 2025-12-20 — contact me if you want the server scaffold or testing harness next.
+- No score is added.
+- The user moves to the next exam within the same level.
+
+Only the first successfully passed exam per level contributes to the final score.
+
+Failed exams are ignored and do not affect scoring.
+
+Scoring Policy
+
+- Each level contributes at most one score.
+- Only passed exams are counted.
+- Failed exams have no effect on the total score.
+- Once the user advances to a higher level, remaining exams in the previous level are skipped.
+
+Greedy Algorithm Application
+
+The Greedy Algorithm is applied after all users complete their exams.
+
+Heuristic Definition
+
+h(n) = total score achieved by the user
+
+Evaluation Function
+
+f(n) = h(n)
+
+The algorithm ranks users by selecting the locally optimal choice, which is the highest total score, without reconsidering previous decisions.
+
+Algorithm Characteristics
+
+- Deterministic behavior
+- No backtracking
+- Time complexity dominated by sorting: O(n log n)
+- Ranking based solely on accumulated score
+
+Local Storage Usage
+
+User data is stored locally in the browser, including:
+
+- Current level
+- Current exam
+- Exam attempts
+- Final score
+- Leaderboard ranking
+
+This approach enables offline functionality and eliminates the need for backend services.
+
+Technologies Used
+
+- HTML5
+- CSS3
+- Vanilla JavaScript
+- JSON
+- Browser Local Storage API
+
+Project Structure
+
+FINAL PROJECT/
+├── home2.html
+├── home2.css
+├── home2.js
+├── stats.html
+├── stats.css
+├── stats.js
+├── users.json
+├── AIQuiz(ROBOT)/
+│ ├── ai2.html
+│ ├── ai2.css
+│ ├── ai2.js
+│ └── aisavecode.js
+├── Quiz(Cat&Rat)/
+│ ├── cat-rat.html
+│ ├── cat-rat.css
+│ ├── cat-rat.js
+│ └── aisavecode.js
+└── Quiz(Magic Library)/
+├── mag.html
+├── mag.css
+└── mag.js
+
+Example Scenario
+
+User enters Easy level.
+
+User fails exam e1.
+
+User passes exam e2.
+
+User gains 2 points.
+
+User advances to Medium level.
+
+Exam e3 is skipped.
+
+Final score is used for ranking.
+
+Educational Objectives
+
+This project demonstrates:
+
+- Adaptive exam systems
+- Greedy decision-making strategies
+- Client-side state management
+- Algorithm-based user ranking
+- Practical use of heuristic functions
+
+Team Members
+
+Name Student ID Role
+Abdulrhman Mohamed Taha 202304470 Core Developer
+Yousef Mohamed Gomaa 202304488 Algorithm Specialist
+Mohammed Ebrahem Rezk 202304358 UI/UX Developer
+Yasmin Mohamed Fayez Tahif 202304466 Frontend Developer
+Omar Elsayed Mohamed 202304658 Project Manager
+Mohamed Salah Mohamed 202304574 Testing and QA
+
+License
+
+This project is released under the MIT License.
+
+Project Status
+
+- Version 1.0
+- Academic submission
+- Frontend-only implementation
+- Offline-capable system
+
+If you want next steps, I can:
+
+- Clean the repository to match academic standards
+- Remove npm references if the project is static
+- Write a short methodology section for reports
+- Prepare a viva or presentation explanation for the algorithm
+- Align the README exactly with your professor’s rubric
