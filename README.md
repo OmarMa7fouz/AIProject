@@ -180,10 +180,3 @@ Project Status
 - Frontend-only implementation
 - Offline-capable system
 
-If you want next steps, I can:
-
-- Clean the repository to match academic standards
-- Remove npm references if the project is static
-- Write a short methodology section for reports
-- Prepare a viva or presentation explanation for the algorithm
-- Align the README exactly with your professor’s rubric
