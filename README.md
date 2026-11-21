@@ -162,12 +162,12 @@ This project demonstrates:
 Team Members
 
 Name Student ID Role
-Abdulrhman Mohamed Taha 202304470 Core Developer
-Yousef Mohamed Gomaa 202304488 Algorithm Specialist
-Mohammed Ebrahem Rezk 202304358 UI/UX Developer
-Yasmin Mohamed Fayez Tahif 202304466 Frontend Developer
-Omar Elsayed Mohamed 202304658 Project Manager
-Mohamed Salah Mohamed 202304574 Testing and QA
+- Abdulrhman Mohamed Taha 202304470 Core Developer
+- Yousef Mohamed Gomaa 202304488 Algorithm Specialist
+- Mohammed Ebrahem Rezk 202304358 UI/UX Developer
+- Yasmin Mohamed Fayez Tahif 202304466 Frontend Developer
+- Omar Elsayed Mohamed 202304658 Project Manager
+- Mohamed Salah Mohamed 202304574 Testing and QA
 
 License
 
