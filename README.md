@@ -1,182 +1,294 @@
-# Quiz Master — Local Quiz Games (Frontend Prototype)
 
+# Quiz Master — Adaptive Local Quiz System
 
-Abstract
+<p align="center">
+  <strong>A Frontend-Based Adaptive Assessment and Quiz Ranking System</strong>
+</p>
 
-This project presents a client-side adaptive quiz system that evaluates users through multiple difficulty levels and ranks them using a Greedy Algorithm. The system dynamically controls exam progression based on user performance and applies a greedy heuristic to compute final rankings. The entire application is implemented using frontend technologies without any backend or database dependency.
+---
 
-Project Description
+## 1. Project Overview
 
-The AI Quiz System is a browser-based application designed to simulate adaptive assessment systems. Users are evaluated through a structured set of exams organized by difficulty levels. Each decision in the exam flow is made locally based on the user’s current performance.
+**Quiz Master** is a browser-based adaptive quiz system designed to evaluate users across multiple difficulty levels and rank their performance using a Greedy Algorithm.
 
-The project focuses on algorithmic logic, decision-making strategies, and heuristic-based ranking rather than server-side processing.
+The system dynamically adjusts exam progression according to each user's performance. It uses a heuristic-based scoring mechanism to determine final rankings.
 
-System Architecture
+The application is built entirely with frontend technologies, requiring no backend server or external database. User progress and results are managed locally through the browser's Local Storage API.
 
-- Frontend-only application
-- No backend server
-- No database
-- Persistent data stored using Browser Local Storage
-- JSON files used for question banks and configuration
+## 2. Abstract
 
-Exam Structure
+This project presents a client-side adaptive quiz system that evaluates users through multiple difficulty levels and ranks them using a Greedy Algorithm.
 
-Each subject contains three difficulty levels:
+The system dynamically controls exam progression based on user performance and applies a greedy heuristic to calculate final rankings.
 
-- Easy
-- Medium
-- Hard
+The project demonstrates algorithmic decision-making, adaptive assessment strategies, heuristic-based optimization, and client-side state management without relying on backend infrastructure.
 
-Each difficulty level contains three exams:
+## 3. Project Objectives
 
-- Easy level: e1, e2, e3
-- Medium level: m1, m2, m3
-- Hard level: h1, h2, h3
+The main objectives of this project are to:
 
-Each exam has a predefined weight:
+- Develop an adaptive examination system with multiple difficulty levels.
+- Implement performance-based exam progression.
+- Apply the Greedy Algorithm to rank users based on their accumulated scores.
+- Manage user progress and examination results using Local Storage.
+- Provide an offline-capable experience without requiring backend services.
+- Demonstrate practical applications of heuristic-based decision-making.
 
-- First exam in level: 3 points
-- Second exam in level: 2 points
-- Third exam in level: 1 point
+## 4. System Architecture
 
-Exam Flow Logic
+The application follows a frontend-only architecture.
 
-- The user selects a subject.
-- The user completes an initial assessment.
-- Based on the score, the system assigns the user to a difficulty level.
-- Exams within a level are taken sequentially.
+| Component | Description |
+|---|---|
+| Frontend | HTML, CSS, and Vanilla JavaScript |
+| Backend | Not required |
+| Database | Not required |
+| Data Storage | Browser Local Storage |
+| Question Banks | JSON files |
+| Execution Environment | Web Browser |
 
-If the user passes an exam:
+### Architecture Characteristics
 
-- The score of that exam is added.
+- Fully client-side execution.
+- No server-side processing.
+- No external database dependency.
+- Local persistence of user progress and results.
+- Offline-capable functionality, subject to browser access to the application files.
+
+## 5. Examination Structure
+
+Each subject is divided into three difficulty levels:
+
+| Level | Exam Sequence | Exam Weights |
+|---|---|---|
+| Easy | e1, e2, e3 | 3, 2, 1 points |
+| Medium | m1, m2, m3 | 3, 2, 1 points |
+| Hard | h1, h2, h3 | 3, 2, 1 points |
+
+Each difficulty level contains three sequential examinations.
+
+### Exam Weighting System
+
+Each examination has a predefined weight:
+
+- First exam: **3 points**
+- Second exam: **2 points**
+- Third exam: **1 point**
+
+The score awarded depends on the examination successfully passed by the user.
+
+## 6. Adaptive Exam Flow
+
+The system determines the user's examination progression based on their performance.
+
+### Examination Process
+
+1. The user selects a subject.
+2. The user completes an initial assessment.
+3. Based on the assessment result, the system assigns an appropriate difficulty level.
+4. The user starts the examinations within the assigned level.
+5. Examinations are completed sequentially.
+6. The system evaluates the user's result after each examination.
+
+### Passing Conditions
+
+When a user passes an examination:
+
+- The corresponding exam weight is added to the total score.
 - The user advances to the next difficulty level.
+- Remaining examinations in the current level are skipped.
 
-If the user fails an exam:
+### Failing Conditions
 
-- No score is added.
-- The user moves to the next exam within the same level.
+When a user fails an examination:
 
-Only the first successfully passed exam per level contributes to the final score.
+- No points are awarded.
+- The user proceeds to the next examination within the same difficulty level.
+- The system continues evaluating the user's performance until an examination is passed or the available examinations are exhausted.
 
-Failed exams are ignored and do not affect scoring.
+**Important:** Only the first successfully passed examination in each level contributes to the final score.
 
-Scoring Policy
+## 7. Scoring Policy
 
-- Each level contributes at most one score.
-- Only passed exams are counted.
-- Failed exams have no effect on the total score.
-- Once the user advances to a higher level, remaining exams in the previous level are skipped.
+The scoring mechanism follows these rules:
 
-Greedy Algorithm Application
+- Each difficulty level contributes a maximum of one examination score.
+- Only successfully passed examinations are counted.
+- Failed examinations do not contribute to the total score.
+- Passing an examination immediately advances the user to the next difficulty level.
+- Remaining examinations in a completed level are skipped.
 
-The Greedy Algorithm is applied after all users complete their exams.
+The final score is calculated by accumulating the points earned across all successfully completed difficulty levels.
 
-Heuristic Definition
+### Example Scoring Scenario
 
-h(n) = total score achieved by the user
+Consider a user who starts at the Easy level:
 
-Evaluation Function
+| Examination | Result | Points |
+|---|---|---:|
+| e1 | Failed | 0 |
+| e2 | Passed | 2 |
+| e3 | Skipped | 0 |
+| m1 | Passed | 3 |
+| h1 | Passed | 3 |
 
+**Final Score: 8 Points**
+
+The user earns 2 points from Easy, 3 points from Medium, and 3 points from Hard.
+
+## 8. Greedy Algorithm Implementation
+
+The Greedy Algorithm is applied during the final ranking process after users complete their examinations.
+
+Its purpose is to rank users according to their accumulated scores.
+
+### 8.1 Heuristic Function
+
+The heuristic function represents the total score achieved by each user.
+
+\[
+h(n) = \text{Total Score of User } n
+\]
+
+### 8.2 Evaluation Function
+
+The evaluation function is defined as:
+
+\[
 f(n) = h(n)
+\]
 
-The algorithm ranks users by selecting the locally optimal choice, which is the highest total score, without reconsidering previous decisions.
+Therefore, the evaluation value is determined entirely by the user's accumulated examination score.
 
-Algorithm Characteristics
+### 8.3 Ranking Strategy
 
-- Deterministic behavior
-- No backtracking
-- Time complexity dominated by sorting: O(n log n)
-- Ranking based solely on accumulated score
+The system applies a greedy selection strategy by prioritizing users with the highest total scores.
 
-Local Storage Usage
+The ranking process:
 
-User data is stored locally in the browser, including:
+1. Retrieves the final scores of all users.
+2. Compares their accumulated scores.
+3. Sorts users in descending order.
+4. Places users with higher scores at the top of the leaderboard.
 
-- Current level
-- Current exam
-- Exam attempts
-- Final score
-- Leaderboard ranking
+### 8.4 Algorithm Characteristics
 
-This approach enables offline functionality and eliminates the need for backend services.
+- **Deterministic:** The same scores produce the same score-based ranking.
+- **No Backtracking:** Previous examination decisions are not reconsidered.
+- **Greedy Selection:** Users with higher accumulated scores receive higher ranking positions.
+- **Time Complexity:** \(O(n \log n)\) for comparison-based sorting, where \(n\) represents the number of users.
+- **Ranking Criterion:** Total accumulated examination score.
 
-Technologies Used
+## 9. Local Storage Management
 
-- HTML5
-- CSS3
-- Vanilla JavaScript
-- JSON
-- Browser Local Storage API
+The application uses the browser's Local Storage API to maintain user information and examination progress.
 
-Project Structure
+### Stored Information
 
+The system stores:
+
+- Current difficulty level.
+- Current examination.
+- Examination attempts.
+- Final accumulated score.
+- User progress.
+- Leaderboard ranking data.
+
+This approach allows the application to maintain user progress between browser sessions without requiring a backend server.
+
+## 10. Technologies Used
+
+| Technology | Purpose |
+|---|---|
+| HTML5 | Application structure |
+| CSS3 | Styling and responsive interface |
+| Vanilla JavaScript | Application logic and algorithm implementation |
+| JSON | Question banks and configuration data |
+| Local Storage API | Client-side data persistence |
+
+## 11. Project Structure
+
+The project is organized into separate files and dedicated directories for each quiz module.
+
+```text
 FINAL PROJECT/
+│
 ├── home2.html
 ├── home2.css
 ├── home2.js
+│
 ├── stats.html
 ├── stats.css
 ├── stats.js
+│
 ├── users.json
-├── AIQuiz(ROBOT)/
-│ ├── ai2.html
-│ ├── ai2.css
-│ ├── ai2.js
-│ └── aisavecode.js
-├── Quiz(Cat&Rat)/
-│ ├── cat-rat.html
-│ ├── cat-rat.css
-│ ├── cat-rat.js
-│ └── aisavecode.js
-└── Quiz(Magic Library)/
-├── mag.html
-├── mag.css
-└── mag.js
+│
+├── AIQuiz (ROBOT)/
+│   ├── ai2.html
+│   ├── ai2.css
+│   ├── ai2.js
+│   └── aisavecode.js
+│
+├── Quiz (Cat & Rat)/
+│   ├── cat-rat.html
+│   ├── cat-rat.css
+│   ├── cat-rat.js
+│   └── aisavecode.js
+│
+└── Quiz (Magic Library)/
+    ├── mag.html
+    ├── mag.css
+    └── mag.js
+```
 
-Example Scenario
+### Main Components
 
-User enters Easy level.
+| Component | Description |
+|---|---|
+| Home Page | Main application entry point |
+| Statistics | Displays project statistics |
+| Users Data | Contains user-related JSON data |
+| AI Quiz (Robot) | Robot-themed quiz module |
+| Cat & Rat Quiz | Interactive Cat & Rat quiz module |
+| Magic Library Quiz | Magic Library-themed quiz module |
 
-User fails exam e1.
+## 12. Educational Outcomes
 
-User passes exam e2.
+This project demonstrates practical knowledge of:
 
-User gains 2 points.
+- Adaptive examination systems.
+- Greedy algorithm implementation.
+- Heuristic functions and evaluation strategies.
+- Algorithmic decision-making.
+- Client-side state management.
+- Browser-based data persistence.
+- Frontend application development.
+- Score calculation and leaderboard ranking.
 
-User advances to Medium level.
+## 13. Team Members
 
-Exam e3 is skipped.
+| Name | Student ID | Role |
+|---|---|---|
+| Abdulrhman Mohamed Taha | 202304470 | Core Developer |
+| Yousef Mohamed Gomaa | 202304488 | Algorithm Specialist |
+| Mohammed Ebrahem Rezk | 202304358 | UI/UX Developer |
+| Yasmin Mohamed Fayez Tahif | 202304466 | Frontend Developer |
+| Omar Elsayed Mohamed | 202304658 | Project Manager |
+| Mohamed Salah Mohamed | 202304574 | Testing and QA |
 
-Final score is used for ranking.
+## 14. Project Status
 
-Educational Objectives
+| Attribute | Details |
+|---|---|
+| Version | 1.0 |
+| Status | Academic Submission |
+| Implementation | Frontend Only |
+| Backend Dependency | None |
+| Database Dependency | None |
+| Offline Capability | Supported |
 
-This project demonstrates:
+## 15. License
 
-- Adaptive exam systems
-- Greedy decision-making strategies
-- Client-side state management
-- Algorithm-based user ranking
-- Practical use of heuristic functions
+This project is released under the **MIT License**.
 
-Team Members
-
-Name Student ID Role
-- Abdulrhman Mohamed Taha 202304470 Core Developer
-- Yousef Mohamed Gomaa 202304488 Algorithm Specialist
-- Mohammed Ebrahem Rezk 202304358 UI/UX Developer
-- Yasmin Mohamed Fayez Tahif 202304466 Frontend Developer
-- Omar Elsayed Mohamed 202304658 Project Manager
-- Mohamed Salah Mohamed 202304574 Testing and QA
-
-License
-
-This project is released under the MIT License.
-
-Project Status
-
-- Version 1.0
-- Academic submission
-- Frontend-only implementation
-- Offline-capable system
-
+See the `LICENSE` file for more information.
